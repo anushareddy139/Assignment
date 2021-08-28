@@ -305,7 +305,7 @@ Exploits :
     - Vulnerability types: Enumarating Users
     - Tested in version: 4.2.2
     - Fixed in version: Not fixed
-  - [x] GIF Walkthrough: [![Image from Gyazo](https://i.gyazo.com/75f3781e86ee15a7cec0073b6119c2ed.gif)](https://gyazo.com/75f3781e86ee15a7cec0073b6119c2ed)
+  - [x] GIF Walkthrough: [![Image from Gyazo](https://github.com/anushareddy139/Assignment/blob/main/ezgif.com-gif-maker.gif)](https://github.com/anushareddy139/Assignment/blob/main/ezgif.com-gif-maker.gif)
   - [x] Steps to recreate: 
     - Simply log in with different usernames to see whether the user exists. Unfortunately this is also possible through permalinks:
     ```
