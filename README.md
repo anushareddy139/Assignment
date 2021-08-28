@@ -313,4 +313,22 @@ Exploits :
     ```
   - [x] Affected source code:
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
+ 
 
+
+2. Comment Cross-Site Scripting
+  - [x] Summary: 
+    - Vulnerability type(s): XSS (2017 OWASP Top 10: A7)
+    - Version(s) affected: Wordpress 3.9 - 5.1
+    - Tested in version: 4.2
+    - Fixed in version: 4.2.23
+  - [x] GIF Walkthrough: 
+  ![Comment XSS gif](https://github.com/anushareddy139/Assignment/blob/main/css.gif)
+  - [ ] Steps to recreate:
+    - Write a comment on any post
+    - Include scripted elements into the comment
+      - Example: <script> alert('SCRIPT ALERT') <script>
+    - Post the comment for the scripted elements to be stored and applied
+  - [ ] Affected source code:
+    - [Link](https://github.com/WordPress/WordPress/commit/0292de60ec78c5a44956765189403654fe4d080b)
+  
