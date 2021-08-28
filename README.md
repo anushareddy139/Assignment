@@ -301,28 +301,28 @@ Milestone 4:
 Exploits :
 
 ### 1. (Required) User Account Enumaration
-  - [x] Summary: 
+  - [ ] Summary: 
     - Vulnerability types: Enumarating Users
     - Tested in version: 4.2.2
     - Fixed in version: Not fixed
-  - [x] GIF Walkthrough: [![Image from Gyazo](https://github.com/anushareddy139/Assignment/blob/main/ezgif.com-gif-maker.gif)](https://github.com/anushareddy139/Assignment/blob/main/ezgif.com-gif-maker.gif)
-  - [x] Steps to recreate: 
+  - [ ] GIF Walkthrough: [![Image from Gyazo](https://github.com/anushareddy139/Assignment/blob/main/ezgif.com-gif-maker.gif)](https://github.com/anushareddy139/Assignment/blob/main/ezgif.com-gif-maker.gif)
+  - [ ] Steps to recreate: 
     - Simply log in with different usernames to see whether the user exists. Unfortunately this is also possible through permalinks:
     ```
     http://example.com/author/[insertusernamehere]
     ```
-  - [x] Affected source code:
+  - [ ] Affected source code:
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
  
 
 
 ### 2. Comment Cross-Site Scripting
-  - [x] Summary: 
+  - [ ] Summary: 
     - Vulnerability type(s): XSS (2017 OWASP Top 10: A7)
     - Version(s) affected: Wordpress 3.9 - 5.1
     - Tested in version: 4.2
     - Fixed in version: 4.2.23
-  - [x] GIF Walkthrough: 
+  - [ ] GIF Walkthrough: 
   ![Comment XSS gif](https://github.com/anushareddy139/Assignment/blob/main/css.gif)
   - [ ] Steps to recreate:
     - Write a comment on any post
